@@ -1,11 +1,11 @@
-const router = require('express').Router();
-const { Category, Product } = require('../../models');
+const router = require("express").Router();
+const { Category, Product } = require("../../models");
 
 // The `/api/categories` endpoint
 
-router.get('/', (req, res) => {
+router.get("/", async (req, res) => {
   try {
-    const productCategories = Category.findAll();
+    const productCategories = await Category.findAll();
     res.status(200).json(productCategories);
   } catch (err) {
     res.status(500).json(err);
@@ -14,15 +14,14 @@ router.get('/', (req, res) => {
   // be sure to include its associated Products
 });
 
-router.get('/:id', (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
-    const productCategories = productCategories.findByPk(req.params.id, {
-      
-      include: [{ model: Category, through: Product, as: 'category_id' }]
+    const productCategories = await productCategories.findByPk(req.params.id, {
+      include: [{ model: Category, through: Product, as: "category_id" }],
     });
 
     if (!locationData) {
-      res.status(404).json({ message: 'No product found with this id!' });
+      res.status(404).json({ message: "No product found with this id!" });
       return;
     }
 
@@ -34,18 +33,18 @@ router.get('/:id', (req, res) => {
   // be sure to include its associated Products
 });
 
-router.post('/', (req, res) => {
-    try {
-      const productCategories = Category.create(req.body);
-      res.status(200).json(productCategories);
-    } catch (err) {
-      res.status(400).json(err);
-    }
+router.post("/", async (req, res) => {
+  try {
+    const productCategories = await Category.create(req.body);
+    res.status(200).json(productCategories);
+  } catch (err) {
+    res.status(400).json(err);
+  }
   // create a new category
 });
 
-router.put('/:product_id', (req, res) => {
-   const product_id = Category.update(
+router.put("/:product_id", async (req, res) => {
+  const product_id = await Category.update(
     {
       product_name: req.body.product_name,
       price: req.body.price,
@@ -54,7 +53,7 @@ router.put('/:product_id', (req, res) => {
     },
     {
       where: {
-        product_id: req.params.product_id
+        product_id: req.params.product_id,
       },
     }
   );
@@ -63,8 +62,8 @@ router.put('/:product_id', (req, res) => {
   // update a category by its `id` value
 });
 
-router.delete('/:product_id', (req, res) => {
-  const product_id = product_id.destroy({
+router.delete("/:product_id", async (req, res) => {
+  const product_id = await product_id.destroy({
     where: {
       product_id: req.params.product_id,
     },
