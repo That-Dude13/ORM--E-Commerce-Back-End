@@ -67,9 +67,9 @@ router.put("/:product_id", async (req, res) => {
 });
 
 router.delete("/:product_id", async (req, res) => {
-  const product_id = await product_id.destroy({
+  const product_id = await Product.destroy({
     where: {
-      product_id: req.params.product_id,
+      id: req.params.product_id,
     },
   });
 

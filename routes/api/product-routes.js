@@ -28,11 +28,10 @@ try {
           model: Tag,
           through: ProductTag,
         },
-      ]};
+      ]
     
-    )}
+    });
     
-
     if (!productData) {
       res.status(404).json({ message: 'No prodcut found with this id' });
       return;
@@ -42,7 +41,7 @@ try {
   } catch (err) {
     res.status(500).json(err);
   }
-
+});
   // find a single product by its `id`
   // be sure to include its associated Category and Tag data
 
