@@ -95,8 +95,8 @@ router.put("/:product_id", async (req, res) => {
       },
     }
     
-  );
-  return res.json(product_id);
+   );
+  // return res.json(product_id);
   
    // find all associated tags from ProductTag
    const productTags = await ProductTag.findAll({
