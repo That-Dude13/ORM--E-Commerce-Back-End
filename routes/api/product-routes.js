@@ -79,14 +79,23 @@ router.post("/", (req, res) => {
 });
 
 // update product
-router.put("/:id", async (req, res) => {
-  try {
-    // update product data
-    const product = await Product.update(req.body, {
+router.put("/:product_id", async (req, res) => {
+   const product_id = await Product.update(
+    {
+      product_name: req.body.product_name,
+      price: req.body.price,
+      stock: req.body.stock,
+      category_id: req.body.category_id,
+    },
+    {
       where: {
-        product_id: req.params.product_id,
+        id: req.params.product_id,
       },
-    });
+    }
+  );
+ return res.json(product_id);
+
+});
 
     // find all associated tags from ProductTag
     const productTags = await ProductTag.findAll({
@@ -114,13 +123,18 @@ router.put("/:id", async (req, res) => {
     await ProductTag.destroy({ where: { id: productTagsToRemove } });
     //create  
     const updatedProductTags = await ProductTag.bulkCreate(newProductTags);
-
+    
     res.json(updatedProductTags);
-  } catch (err) {
+    try {
+      
+    } catch (error) {
+      
+  
+    
     // console.log(err);
     res.status(400).json(err);
-  }
-});
+    };
+
 
 router.delete("/:id", (req, res) => {
   // delete one product by its `id` value
