@@ -25,5 +25,3 @@
   ## Questions 
   Please email questions to: keasiley@gmail.com
   Find this and my other projects at: [That-Dude13](https://www.github.com/That-Dude13)
-
-  https://drive.google.com/file/d/1L33NDRvklWyuJwqHtaus_ZVpbR5P01Dy/view?usp=share_link
