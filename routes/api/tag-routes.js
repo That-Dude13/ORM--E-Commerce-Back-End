@@ -1,29 +1,26 @@
-const router = require('express').Router();
-const { Tag, Product, ProductTag } = require('../../models');
-
+const router = require("express").Router();
+const { Tag, Product, ProductTag } = require("../../models");
 
 // The `/api/tags` endpoint
 
-router.get('/', async (req, res) => {
+router.get("/", async (req, res) => {
   try {
-    const productTags = await Tag.findAll( {
-      include: [{ model:Product,
-                 through:ProductTag,}],
-    })
-      
+    const productTags = await Tag.findAll({
+      include: [{ model: Product, through: ProductTag }],
+    });
+
     res.status(200).json(productTags);
   } catch (err) {
-    res.status(500).json(err);  
+    res.status(500).json(err);
   }
   // find all tags
   // be sure to include its associated Product data
 });
 
-router.get('/:id', async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
     const productTags = await Tag.findByPk(req.params.id, {
-      include: [{ model:Product,
-                 through:ProductTag,}],
+      include: [{ model: Product, through: ProductTag }],
     });
 
     if (!productTags) {
@@ -39,7 +36,7 @@ router.get('/:id', async (req, res) => {
   // be sure to include its associated Product data
 });
 
-router.post('/', async (req, res) => {
+router.post("/", async (req, res) => {
   try {
     const productTags = await Tag.create(req.body);
 
@@ -50,7 +47,7 @@ router.post('/', async (req, res) => {
   // create a new tag
 });
 
-router.put('/:tag_id', async (req, res) => {
+router.put("/:tag_id", async (req, res) => {
   const tag_name = await Tag.update(req.body, {
     where: {
       id: req.params.tag_id,
@@ -60,7 +57,7 @@ router.put('/:tag_id', async (req, res) => {
   // update a tag's name by its `id` value
 });
 
-router.delete('/:tag_id', async (req, res) => {
+router.delete("/:tag_id", async (req, res) => {
   const tag_id = await Tag.destroy({
     where: {
       id: req.params.tag_id,
@@ -68,7 +65,6 @@ router.delete('/:tag_id', async (req, res) => {
   });
 
   return res.json(tag_id);
-
 });
 
 module.exports = router;

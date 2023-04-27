@@ -6,7 +6,7 @@ const { Category, Product } = require("../../models");
 router.get("/", async (req, res) => {
   try {
     const productCategories = await Category.findAll({
-      include: [{model: Product}]
+      include: [{ model: Product }],
     });
     res.status(200).json(productCategories);
   } catch (err) {
@@ -20,7 +20,7 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const productCategories = await Category.findByPk(req.params.id, {
-      include: [{ model: Product}],
+      include: [{ model: Product }],
     });
 
     if (!productCategories) {
@@ -30,7 +30,7 @@ router.get("/:id", async (req, res) => {
 
     res.status(200).json(productCategories);
   } catch (err) {
-    console.log(err)
+    console.log(err);
     res.status(500).json(err);
   }
   // find one category by its `id` value
@@ -48,23 +48,17 @@ router.post("/", async (req, res) => {
 });
 
 router.put("/:product_id", async (req, res) => {
-  const product_id = await Category.update(
-    {
-      product_name: req.body.product_name,
-      price: req.body.price,
-      stock: req.body.stock,
-      category_id: req.body.category_id,
+  console.log(req.body);
+  Category.update(req.body, {
+    where: {
+      id: req.params.product_id,
     },
-    {
-      where: {
-        product_id: req.params.product_id,
-      },
-    }
-  );
+  });
 
-  return res.json(product_id);
-  // update a category by its `id` value
+  return res.json(req.body);
 });
+
+// update a category by its `id` value
 
 router.delete("/:product_id", async (req, res) => {
   const product_id = await Product.destroy({
